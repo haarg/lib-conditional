@@ -6,8 +6,9 @@ use Carp;
 use Config ();
 use Errno qw(EACCES);
 use constant _PMC_ENABLED => !(
-  exists &Config::non_bincompat_options ? grep { $_ eq 'PERL_DISABLE_PMC' } Config::non_bincompat_options()
-  : $Config::Config{ccflags} =~ /(?:^|\s)-DPERL_DISABLE_PMC\b/
+  exists &Config::non_bincompat_options
+    ? grep $_ eq 'PERL_DISABLE_PMC', Config::non_bincompat_options()
+    : $Config::Config{ccflags} =~ /(?:^|\s)-DPERL_DISABLE_PMC\b/
 );
 
 sub import {
